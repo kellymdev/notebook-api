@@ -17,19 +17,19 @@ RSpec.describe Api::V1::NotesController, type: :controller do
     let(:expected_result) do
       [
         {
-          id: note_1.id,
-          title: note_1.title,
-          body: note_1.body
-        },
-        {
           id: note_2.id,
           title: note_2.title,
           body: note_2.body
+        },
+        {
+          id: note_1.id,
+          title: note_1.title,
+          body: note_1.body
         }
       ]
     end
 
-    it 'returns a list of notes as json' do
+    it 'returns a list of notes ordered in descending created at order as json' do
       get :index
 
       expect(response.body).to eq expected_result.to_json
