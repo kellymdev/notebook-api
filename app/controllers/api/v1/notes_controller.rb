@@ -6,5 +6,16 @@ module Api::V1
       @notes = Note.all.as_json(except: [:created_at, :updated_at])
       render json: @notes
     end
+
+    def create
+      @note = Note.create(note_params)
+      render json: @note.as_json(except: [:created_at, :updated_at])
+    end
+
+    private
+
+    def note_params
+      params.require(:note).permit(:title, :body)
+    end
   end
 end

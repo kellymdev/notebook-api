@@ -35,4 +35,31 @@ RSpec.describe Api::V1::NotesController, type: :controller do
       expect(response.body).to eq expected_result.to_json
     end
   end
+
+  describe '#create' do
+    let(:params) do
+      {
+        note: {
+          title: 'Test',
+          body: 'I just added this note'
+        }
+      }
+    end
+
+    it 'creates a note' do
+      expect { post :create, params: params }.to change { Note.count }.by 1
+    end
+
+    it 'returns the details of the newly created note' do
+      post :create, params: params
+
+      expected_result = {
+        id: Note.last.id,
+        title: 'Test',
+        body: 'I just added this note'
+      }
+
+      expect(response.body).to eq expected_result.to_json
+    end
+  end
 end
