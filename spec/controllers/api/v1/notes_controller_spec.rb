@@ -1,14 +1,17 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::NotesController, type: :controller do
+  let(:category) { Category.create!(name: 'Test') }
   let!(:note_1) do
     Note.create!(
       title: 'Smile',
+      category: category,
       body: 'The rain in Spain falls mainly on the plains')
   end
   let!(:note_2) do
     Note.create!(
       title: 'Happy',
+      category: category,
       body: 'The quick brown fox jumps over the lazy dog'
     )
   end
@@ -19,12 +22,20 @@ RSpec.describe Api::V1::NotesController, type: :controller do
         {
           id: note_2.id,
           title: note_2.title,
-          body: note_2.body
+          body: note_2.body,
+          category: {
+            id: category.id,
+            name: category.name
+          }
         },
         {
           id: note_1.id,
           title: note_1.title,
-          body: note_1.body
+          body: note_1.body,
+          category: {
+            id: category.id,
+            name: category.name
+          }
         }
       ]
     end
@@ -80,7 +91,11 @@ RSpec.describe Api::V1::NotesController, type: :controller do
       {
         id: note_1.id,
         title: title,
-        body: body
+        body: body,
+        category: {
+          id: category.id,
+          name: category.name
+        }
       }
     end
 
