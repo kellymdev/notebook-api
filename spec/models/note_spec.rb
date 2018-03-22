@@ -6,7 +6,8 @@ RSpec.describe Note, type: :model do
     Note.create!(
       title: 'Hello',
       body: 'The rain in Spain falls mainly on the plains',
-      category: category
+      category: category,
+      image_url: 'http://www.test.com/image.jpg'
     )
   end
 
@@ -24,6 +25,7 @@ RSpec.describe Note, type: :model do
         'category_id' => note.category.id,
         'created_at' => '2018-03-22T00:21:43.000Z',
         'id' => note.id,
+        'image_url' => note.image_url,
         'updated_at' => '2018-03-22T02:57:22.000Z',
         'title' => note.title,
         'category_name' => note.category.name

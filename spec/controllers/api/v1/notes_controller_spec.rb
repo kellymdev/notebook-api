@@ -6,13 +6,16 @@ RSpec.describe Api::V1::NotesController, type: :controller do
     Note.create!(
       title: 'Smile',
       category: category,
-      body: 'The rain in Spain falls mainly on the plains')
+      body: 'The rain in Spain falls mainly on the plains',
+      image_url: 'http://www.test.com/image.jpg'
+    )
   end
   let!(:note_2) do
     Note.create!(
       title: 'Happy',
       category: category,
-      body: 'The quick brown fox jumps over the lazy dog'
+      body: 'The quick brown fox jumps over the lazy dog',
+      image_url: 'http://www.test.com/image2.jpg'
     )
   end
 
@@ -24,6 +27,7 @@ RSpec.describe Api::V1::NotesController, type: :controller do
           title: note_2.title,
           body: note_2.body,
           category_id: category.id,
+          image_url: note_2.image_url,
           category_name: category.name
         },
         {
@@ -31,6 +35,7 @@ RSpec.describe Api::V1::NotesController, type: :controller do
           title: note_1.title,
           body: note_1.body,
           category_id: category.id,
+          image_url: note_1.image_url,
           category_name: category.name
         }
       ]
@@ -49,6 +54,7 @@ RSpec.describe Api::V1::NotesController, type: :controller do
         note: {
           title: 'Test',
           body: 'I just added this note',
+          image_url: 'http://www.test.com/image3.jpg',
           category_id: category.id
         }
       }
@@ -66,6 +72,7 @@ RSpec.describe Api::V1::NotesController, type: :controller do
         title: 'Test',
         body: 'I just added this note',
         category_id: category.id,
+        image_url: 'http://www.test.com/image3.jpg',
         category_name: category.name
       }
 
@@ -76,13 +83,15 @@ RSpec.describe Api::V1::NotesController, type: :controller do
   describe '#update' do
     let(:title) { 'Laugh' }
     let(:body) { 'In Hartford, Hereford and Hampshire, hurricanes hardly ever happen' }
+    let(:image_url) { 'http://www.example.com/test.jpg' }
     let(:params) do
       {
         id: note_1.id,
         note: {
           title: title,
           body: body,
-        category_id: category.id
+          category_id: category.id,
+          image_url: image_url
         }
       }
     end
@@ -93,6 +102,7 @@ RSpec.describe Api::V1::NotesController, type: :controller do
         title: title,
         body: body,
         category_id: category.id,
+        image_url: image_url,
         category_name: category.name
       }
     end
