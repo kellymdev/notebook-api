@@ -62,4 +62,32 @@ RSpec.describe Api::V1::NotesController, type: :controller do
       expect(response.body).to eq expected_result.to_json
     end
   end
+
+  describe '#update' do
+    let(:title) { 'Laugh' }
+    let(:body) { 'In Hartford, Hereford and Hampshire, hurricanes hardly ever happen' }
+    let(:params) do
+      {
+        id: note_1.id,
+        note: {
+          title: title,
+          body: body
+        }
+      }
+    end
+
+    let(:expected_result) do
+      {
+        id: note_1.id,
+        title: title,
+        body: body
+      }
+    end
+
+    it 'updates the note' do
+      put :update, params: params
+
+      expect(response.body).to eq expected_result.to_json
+    end
+  end
 end
