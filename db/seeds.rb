@@ -1,3 +1,11 @@
+categories = Category.create(
+  [
+    { name: 'Photography' },
+    { name: 'General' },
+    { name: 'Cats' }
+  ]
+)
+
 notes = Note.create(
   [
     {
