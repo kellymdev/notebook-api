@@ -23,19 +23,15 @@ RSpec.describe Api::V1::NotesController, type: :controller do
           id: note_2.id,
           title: note_2.title,
           body: note_2.body,
-          category: {
-            id: category.id,
-            name: category.name
-          }
+          category_id: category.id,
+          category_name: category.name
         },
         {
           id: note_1.id,
           title: note_1.title,
           body: note_1.body,
-          category: {
-            id: category.id,
-            name: category.name
-          }
+          category_id: category.id,
+          category_name: category.name
         }
       ]
     end
@@ -52,7 +48,8 @@ RSpec.describe Api::V1::NotesController, type: :controller do
       {
         note: {
           title: 'Test',
-          body: 'I just added this note'
+          body: 'I just added this note',
+          category_id: category.id
         }
       }
     end
@@ -67,7 +64,9 @@ RSpec.describe Api::V1::NotesController, type: :controller do
       expected_result = {
         id: Note.last.id,
         title: 'Test',
-        body: 'I just added this note'
+        body: 'I just added this note',
+        category_id: category.id,
+        category_name: category.name
       }
 
       expect(response.body).to eq expected_result.to_json
@@ -82,7 +81,8 @@ RSpec.describe Api::V1::NotesController, type: :controller do
         id: note_1.id,
         note: {
           title: title,
-          body: body
+          body: body,
+        category_id: category.id
         }
       }
     end
@@ -92,10 +92,8 @@ RSpec.describe Api::V1::NotesController, type: :controller do
         id: note_1.id,
         title: title,
         body: body,
-        category: {
-          id: category.id,
-          name: category.name
-        }
+        category_id: category.id,
+        category_name: category.name
       }
     end
 

@@ -5,18 +5,18 @@ module Api::V1
     before_action :find_note, only: [:update, :destroy]
 
     def index
-      @notes = Note.order("created_at DESC").as_json(except: [:created_at, :updated_at, :category_id], include: { category: { only: [:id, :name] } })
+      @notes = Note.order("created_at DESC").as_json(except: [:created_at, :updated_at])
       render json: @notes
     end
 
     def create
       @note = Note.create(note_params)
-      render json: @note.as_json(except: [:created_at, :updated_at, :category_id], include: { category: { only: [:id, :name] } })
+      render json: @note.as_json(except: [:created_at, :updated_at])
     end
 
     def update
       @note.update(note_params)
-      render json: @note.as_json(except: [:created_at, :updated_at, :category_id], include: { category: { only: [:id, :name] } })
+      render json: @note.as_json(except: [:created_at, :updated_at])
     end
 
     def destroy
@@ -34,7 +34,7 @@ module Api::V1
     end
 
     def note_params
-      params.require(:note).permit(:title, :body)
+      params.require(:note).permit(:title, :body, :category_id)
     end
   end
 end
