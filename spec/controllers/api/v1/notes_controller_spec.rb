@@ -90,4 +90,18 @@ RSpec.describe Api::V1::NotesController, type: :controller do
       expect(response.body).to eq expected_result.to_json
     end
   end
+
+  describe '#destroy' do
+    context 'when the note can be deleted' do
+      it 'deletes the note' do
+        expect { delete :destroy, params: { id: note_1.id } }.to change { Note.count }.by -1
+      end
+
+      it 'returns http status 204 (no content)' do
+        delete :destroy, params: { id: note_1.id }
+
+        expect(response.status).to eq 204
+      end
+    end
+  end
 end

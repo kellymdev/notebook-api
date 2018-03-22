@@ -2,7 +2,7 @@
 
 module Api::V1
   class NotesController < ApplicationController
-    before_action :find_note, only: [:update]
+    before_action :find_note, only: [:update, :destroy]
 
     def index
       @notes = Note.order("created_at DESC").as_json(except: [:created_at, :updated_at])
@@ -17,6 +17,14 @@ module Api::V1
     def update
       @note.update(note_params)
       render json: @note.as_json(except: [:created_at, :updated_at])
+    end
+
+    def destroy
+      if @note.destroy
+        head :no_content, status: :ok
+      else
+        render json @note.errors, status: :unprocessable_entity
+      end
     end
 
     private
