@@ -24,4 +24,49 @@ RSpec.describe Api::V1::CategoriesController, type: :controller do
       expect(response.body).to eq expected_data.to_json
     end
   end
+
+  describe '#show' do
+    let!(:note_1) do
+      category_1.notes.create!(
+        title: 'Happy',
+        body: 'The quick brown fox jumps over the lazy dog'
+      )
+    end
+    let!(:note_2) do
+      category_1.notes.create!(
+        title: 'Smile',
+        body: 'The rain in Spain falls mainly on the plains'
+      )
+    end
+    let!(:note_3) do
+      category_2.notes.create!(
+        title: 'Laugh',
+        body: 'In Hartford, Hereford and Hampshire, hurricanes hardly ever happen'
+      )
+    end
+    let(:expected_data) do
+      [
+        {
+          id: note_2.id,
+          title: note_2.title,
+          body: note_2.body,
+          category_id: category_1.id,
+          category_name: category_1.name
+        },
+        {
+          id: note_1.id,
+          title: note_1.title,
+          body: note_1.body,
+          category_id: category_1.id,
+          category_name: category_1.name
+        }
+      ]
+    end
+
+    it 'returns a list of notes for the category as json' do
+      get :show, params: { id: category_1.id }
+
+      expect(response.body).to eq expected_data.to_json
+    end
+  end
 end
